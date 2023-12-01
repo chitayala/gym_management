@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Testing"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    - name: Install Dependencies
+      run: |
+        composer install
+
+    - name: Deploy to Production Environment
+      run: |
+        # Add commands to deploy to your production environment
+        # Example: Deploying using AWS Elastic Beanstalk
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        eb init -p php gym-system
+        eb create production-env
