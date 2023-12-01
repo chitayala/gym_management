@@ -1,0 +1,17 @@
+{
+    "name": "vishnu/gymsystem",
+    "description": "this is gym management applications",
+    "type": "project",
+    "license": "free",
+    "autoload": {
+        "psr-4": {
+            "Vishnu\\Gymsystem\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vishnu"
+        }
+    ],
+    "require": {}
+}
