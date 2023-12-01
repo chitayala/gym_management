@@ -1,4 +1,4 @@
-name: Deploy to Testing
+name: Deploy to Dev
 
 on:
   workflow_run:
@@ -14,6 +14,18 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Install EB CLI
+      run: pip install awsebcli --upgrade
+
+    - name: Add EB CLI to PATH
+      run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
+
+    - name: Verify EB CLI Installation
+      run: eb --version
+
+    - name: Configure AWS Credentials
+      run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} && aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -23,11 +35,11 @@ jobs:
       run: |
         composer install
 
-    - name: Deploy to Testing Environment
+    - name: Deploy to Dev Environment
       run: |
         # Add commands to deploy to your testing environment
         # Example: Deploying using AWS Elastic Beanstalk
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         eb init -p php gym-system
-        eb create testing-env
+        eb create gym-system-dev-env
