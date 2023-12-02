@@ -26,7 +26,7 @@ if(isset($_SESSION["user_data"]))
 		<div class="login-content">
 			
 			
-			<h1 style="color:white;">GYM Management System</h1>
+			<h1 style="color:white;">GYM Management System!</h1>
 			
 			<!-- progress bar indicator -->
 			<div class="login-progressbar-indicator">
